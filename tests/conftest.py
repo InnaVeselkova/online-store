@@ -40,3 +40,12 @@ def sample_category_products():
             )
         ]
     )
+
+
+@pytest.fixture
+def sample_products():
+    return [
+        Product(name="Product 1", description="Desc 1", price=100.0, quantity=10),
+        Product(name="Product 2", description="Desc 2", price=200.0, quantity=20),
+        Product(name="Product 3", description="Desc 3", price=300.0, quantity=30),
+    ]

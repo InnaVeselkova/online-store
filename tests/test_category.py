@@ -21,3 +21,24 @@ def test_multiple_categories_increase_counts():
 
     assert Category.category_count == 2
     assert Category.product_count == 2
+
+
+def test_category_initialization(sample_products):
+    # Создаем категорию
+    category = Category(
+        name="Electronics",
+        description="Electronic gadgets",
+        products=sample_products
+    )
+
+    # Проверяем атрибуты объекта
+    assert category.name == "Electronics"
+    assert category.description == "Electronic gadgets"
+    assert category.products == sample_products
+
+
+def test_empty_products_list():
+    # Тестирование категории без продуктов
+    category = Category("EmptyCategory", "No products here", [])
+
+    assert category.products == []
