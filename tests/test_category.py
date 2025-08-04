@@ -1,3 +1,4 @@
+import pytest
 from src.category import Category
 from src.product import Product
 
@@ -42,3 +43,49 @@ def test_empty_products_list():
     category = Category("EmptyCategory", "No products here", [])
 
     assert category.products == []
+
+
+def test_create_category_with_products(sample_products_2):
+    # Проверка счетчиков
+    initial_category_count = Category.category_count
+    initial_product_count = Category.product_count
+
+    category = Category("Фрукты", "Описание", sample_products_2)
+
+    # Проверка атрибутов
+    assert category.name == "Фрукты"
+    assert category.description == "Описание"
+    # Проверка внутреннего списка продуктов
+    assert len(category.products) == len(sample_products_2)
+
+    # Проверка счетчиков
+    assert Category.category_count == initial_category_count + 1
+    assert Category.product_count == initial_product_count + len(sample_products_2)
+
+
+def test_internal_products_list_is_private():
+    # Проверка приватности
+    p1 = Product("Книга X", "Описание X", 120.0, 4)
+    category = Category("Тестовая категория", "Описание", [p1])
+
+    with pytest.raises(AttributeError):
+        _ = category.__products
+
+
+def test_products_info_returns_correct_string():
+    # Проверка геттера
+    p1 = Product("Книга А", "Описание А", 50.0, 1)
+    p2 = Product("Книга Б", "Описание Б", 75.5, 2)
+    category = Category("Категория", "Описание", [p1, p2])
+
+    info_str = category.products_info
+
+    # Проверяем, что строка содержит информацию о каждом продукте
+    assert f"{p1.name}, {p1.price} руб." in info_str
+    assert f"{p2.name}, {p2.price} руб." in info_str
+
+    # Проверяем, что строки разделены переносом
+    lines = info_str.split("\n")
+    assert len(lines) == 2
+    assert lines[0] == f"{p1.name}, {p1.price} руб."
+    assert lines[1] == f"{p2.name}, {p2.price} руб."
