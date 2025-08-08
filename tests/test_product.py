@@ -36,7 +36,7 @@ def test_from_dict_valid_data():
         'price': 25.5,
         'quantity': 10
     }
-    product = Product.from_dict(data)
+    product = Product.new_product(data)
     assert isinstance(product, Product)
     assert product.name == 'Книга'
     assert product.description == 'Учебник по программированию'
@@ -52,4 +52,4 @@ def test_from_dict_invalid_price_and_quantity():
         'quantity': 'not_a_number'
     }
     with pytest.raises(ValueError):
-        Product.from_dict(data)
+        Product.new_product(data)

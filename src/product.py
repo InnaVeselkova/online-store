@@ -12,11 +12,11 @@ class Product:
     def __init__(self, name: str, description: str, price: float, quantity: int):
         self.name = name
         self.description = description
-        self.price = price
+        self.__price = price
         self.quantity = quantity
 
     @classmethod
-    def from_dict(cls, data: Dict) -> 'Product':
+    def new_product(cls, data: Dict) -> 'Product':
         return cls(
             name=data.get('name'),
             description=data.get('description'),
@@ -26,14 +26,14 @@ class Product:
 
     @property
     def price(self) -> float:
-        return self._price
+        return self.__price
 
     @price.setter
     def price(self, value: float):
         if value <= 0:
             print("Цена не должна быть нулевой или отрицательной")
         else:
-            self._price = value
+            self.__price = value
 
 
 def load_product_json(path: str) -> List[Dict]:
