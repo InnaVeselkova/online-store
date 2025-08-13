@@ -1,5 +1,4 @@
 from typing import List
-
 from src.product import Product
 
 
@@ -8,18 +7,38 @@ class Category:
     category_count = 0
     product_count = 0
 
-    name: str
-    description: str
-    products: List[Product]
-
-    def __init__(self, name, description, products):
+    def __init__(self, name: str, description: str, products: List[Product]):
         self.name = name
         self.description = description
-        self.products = products
+        self.__products = products
 
-        # Обновляем атрибуты класса при создании нового объекта
+        # Обновляем счетчики после добавления всех продуктов
         Category.category_count += 1
-        Category.product_count += len(self.products)
+        Category.product_count += len(products)
+
+    @property
+    def products_(self):
+        return self.__products
+
+    def _add_product_internal(self, product: Product):
+        """Приватный метод для добавления продукта в список."""
+        self.__products.append(product)
+        return self.__products
+
+    def add_product(self, product: Product):
+        """Публичный метод для добавления продукта."""
+        self._add_product_internal(product)
+        Category.product_count += 1
+        return self.__products
+
+    @property
+    def products(self) -> str:
+        """Геттер, возвращающий строку с информацией о всех продуктах."""
+        info_lines = []
+        for product in self.__products:
+            line = f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт."
+            info_lines.append(line)
+        return "\n".join(info_lines)
 
 
 if __name__ == "__main__":  # pragma: no cover

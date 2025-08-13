@@ -49,3 +49,10 @@ def sample_products():
         Product(name="Product 2", description="Desc 2", price=200.0, quantity=20),
         Product(name="Product 3", description="Desc 3", price=300.0, quantity=30),
     ]
+
+
+@pytest.fixture
+def sample_products_2():
+    p1 = Product("Апельсин", "Описание 1", 100.0, 2)
+    p2 = Product("Банан", "Описание 2", 200.0, 3)
+    return [p1, p2]

@@ -1,3 +1,4 @@
+import pytest
 from src.category import Category
 from src.product import Product
 
@@ -5,10 +6,7 @@ from src.product import Product
 def test_category_products_init(sample_category_products):
     assert sample_category_products.name == "Смартфоны"
     assert sample_category_products.description == "Смартфоны, как средство коммуникации"
-    Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
-    Product("Iphone 15", "512GB, Gray space", 210000.0, 8)
-    Product("Xiaomi Redmi Note 11", "1024GB, Синий", 31000.0, 14)
-    assert len(sample_category_products.products) == 3
+    assert len(sample_category_products.products_) == 3
 
 
 def test_multiple_categories_increase_counts():
@@ -34,11 +32,51 @@ def test_category_initialization(sample_products):
     # Проверяем атрибуты объекта
     assert category.name == "Electronics"
     assert category.description == "Electronic gadgets"
-    assert category.products == sample_products
+    # Проверка списка продуктов
+    assert category.products_ == sample_products
 
 
-def test_empty_products_list():
-    # Тестирование категории без продуктов
-    category = Category("EmptyCategory", "No products here", [])
+def test_create_category_with_products(sample_products_2):
+    # Проверка счетчиков
+    initial_category_count = Category.category_count
+    initial_product_count = Category.product_count
 
-    assert category.products == []
+    category = Category("Фрукты", "Описание", sample_products_2)
+
+    # Проверка атрибутов
+    assert category.name == "Фрукты"
+    assert category.description == "Описание"
+    # Проверка внутреннего списка продуктов
+    assert len(category.products_) == len(sample_products_2)
+
+    # Проверка счетчиков
+    assert Category.category_count == initial_category_count + 1
+    assert Category.product_count == initial_product_count + len(sample_products_2)
+
+
+def test_internal_products_list_is_private():
+    # Проверка приватности
+    p1 = Product("Книга X", "Описание X", 120.0, 4)
+    category = Category("Тестовая категория", "Описание", [p1])
+
+    with pytest.raises(AttributeError):
+        _ = category.__products
+
+
+def test_products_info_returns_correct_string():
+    # Создаем продукты с учетом количества
+    p1 = Product("Книга А", "Описание А", 50.0, 1)
+    p2 = Product("Книга Б", "Описание Б", 75.5, 2)
+    category = Category("Категория", "Описание", [p1, p2])
+
+    info_str = category.products
+
+    # Проверяем, что строка содержит информацию о каждом продукте в новом формате
+    assert f"{p1.name}, {p1.price} руб. Остаток: {p1.quantity} шт." in info_str
+    assert f"{p2.name}, {p2.price} руб. Остаток: {p2.quantity} шт." in info_str
+
+    # Проверяем, что строки разделены переносом и правильные
+    lines = info_str.split("\n")
+    assert len(lines) == 2
+    assert lines[0] == f"{p1.name}, {p1.price} руб. Остаток: {p1.quantity} шт."
+    assert lines[1] == f"{p2.name}, {p2.price} руб. Остаток: {p2.quantity} шт."
