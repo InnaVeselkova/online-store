@@ -53,3 +53,20 @@ def test_from_dict_invalid_price_and_quantity():
     }
     with pytest.raises(ValueError):
         Product.new_product(data)
+
+
+def test_product_addition():
+    # Создаем два продукта
+    product1 = Product("Товар 1", "Описание 1", 100, 10)  # Общая стоимость 1000
+    product2 = Product("Товар 2", "Описание 2", 200, 2)   # Общая стоимость: 400
+
+    # Складываем продукты
+    total_cost = product1 + product2
+    assert total_cost == 1400
+
+
+def test_product_str():
+    product1 = Product("Товар 1", "Описание 1", 100, 10)
+
+    result = str(product1)
+    assert result == "Товар 1, 100.0 руб. Остаток: 10 шт."
