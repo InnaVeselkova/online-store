@@ -35,6 +35,16 @@ class Product:
         else:
             self.__price = value
 
+    def __add__(self, other):
+        # Складывает стоимость всех продуктов
+        if isinstance(other, Product):
+            return self.price * self.quantity + other.price * other.quantity
+        else:
+            raise TypeError
+
+    def __str__(self):
+        return f"{self.name}, {self.__price} руб. Остаток: {self.quantity} шт."
+
 
 def load_product_json(path: str) -> List[Dict]:
     full_path = os.path.abspath(path)
