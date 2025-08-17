@@ -27,6 +27,8 @@ class Category:
 
     def add_product(self, product: Product):
         """Публичный метод для добавления продукта."""
+        if not isinstance(product, Product):
+            raise TypeError("Можно добавлять только объекты типа Product или его наследников.")
         self._add_product_internal(product)
         Category.product_count += 1
         return self.__products
