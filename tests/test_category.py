@@ -1,6 +1,8 @@
 import pytest
 from src.category import Category
 from src.product import Product
+from src.smartphone_product import Smartphone
+from src.lawnGrass_product import LawnGrass
 
 
 def test_category_products_init(sample_category_products):
@@ -70,3 +72,30 @@ def test_category_str():
 
     result = str(category)
     assert result == "Категория: Категория. Количество продуктов: 3 шт."
+
+
+def test_add_product_valid():
+    # Создаем категорию с пустым списком
+    category = Category("", "", [])
+
+    # Создаем объекты продуктов и наследников
+    product_1 = Product("Товар", "Описание", 100.0, 5)
+    smartphone_1 = Smartphone("Samsung Galaxy C23 Ultra", "Хороший", 100.0, 3, "Высокая", " C23 Ultra", "1 Gb", "red")
+    grass_sample = LawnGrass("grass", "for lawn", 50.0, 7, "Germany", "sometime", "green")
+
+    # Добавляем объекты
+    category.add_product(product_1)
+    category.add_product(smartphone_1)
+    category.add_product(grass_sample)
+
+    # Проверяем
+    products_in_category = category.products_
+    assert product_1 in products_in_category
+    assert smartphone_1 in products_in_category
+    assert grass_sample in products_in_category
+
+
+def test_add_product_invalid():
+    category = Category("", "", [])
+    with pytest.raises(TypeError):
+        category.add_product("не продукт")
