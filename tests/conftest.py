@@ -2,6 +2,8 @@ import pytest
 
 from src.category import Category
 from src.product import Product
+from src.smartphone_product import Smartphone
+from src.lawnGrass_product import LawnGrass
 
 
 @pytest.fixture
@@ -56,3 +58,13 @@ def sample_products_2():
     p1 = Product("Апельсин", "Описание 1", 100.0, 2)
     p2 = Product("Банан", "Описание 2", 200.0, 3)
     return [p1, p2]
+
+
+@pytest.fixture
+def sample_smartphone():
+    return Smartphone("Samsung Galaxy C23 Ultra", "Хороший", 100.0, 3, "Высокая", " C23 Ultra", "1 Gb", "red")
+
+
+@pytest.fixture
+def sample_lawngrass():
+    return LawnGrass("grass", "for lawn", 50.0, 7, "Germany", "sometime", "green")
