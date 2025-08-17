@@ -1,15 +1,18 @@
 import json
 import os
 from typing import Dict, List
+from src.baseProduct import BaseProduct
+from src.reprMixin import ReprMixin
 
 
-class Product:
+class Product(BaseProduct, ReprMixin):
     name: str
     description: str
     price: float
     quantity: int
 
     def __init__(self, name: str, description: str, price: float, quantity: int):
+        super().__init__()
         self.name = name
         self.description = description
         self.__price = float(price)
