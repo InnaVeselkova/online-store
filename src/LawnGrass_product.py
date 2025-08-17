@@ -7,3 +7,10 @@ class LawnGrass(Product):
         self.country = country
         self.germination_period = germination_period
         self.color = color
+
+   def __add__(self, other):
+        # Складывает стоимость всех продуктов
+        if type(other) is LawnGrass:
+            return self.price * self.quantity + other.price * other.quantity
+        else:
+            raise TypeError
