@@ -31,14 +31,10 @@ class Category:
         Category.product_count += 1
         return self.__products
 
-    @property
-    def products(self) -> str:
-        """Геттер, возвращающий строку с информацией о всех продуктах."""
-        info_lines = []
-        for product in self.__products:
-            line = f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт."
-            info_lines.append(line)
-        return "\n".join(info_lines)
+    def __str__(self):
+        # Возвращает строку с информацией о продуктах
+        total_quantity = sum(product.quantity for product in self.__products)
+        return f"Категория: {self.name}. Количество продуктов: {total_quantity} шт."
 
 
 if __name__ == "__main__":  # pragma: no cover
@@ -67,7 +63,7 @@ if __name__ == "__main__":  # pragma: no cover
 
     print(category1.name == "Смартфоны")
     print(category1.description)
-    print(len(category1.products))
+    print(len(category1.products_))
     print(category1.category_count)
     print(category1.product_count)
 
@@ -78,8 +74,8 @@ if __name__ == "__main__":  # pragma: no cover
 
     print(category2.name)
     print(category2.description)
-    print(len(category2.products))
-    print(category2.products)
+    print(len(category2.products_))
+    print(category2.products_)
 
     print(Category.category_count)
     print(Category.product_count)

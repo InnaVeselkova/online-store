@@ -60,23 +60,13 @@ def test_internal_products_list_is_private():
     category = Category("Тестовая категория", "Описание", [p1])
 
     with pytest.raises(AttributeError):
-        _ = category.__products
+        _ = category.products_.self
 
 
-def test_products_info_returns_correct_string():
-    # Создаем продукты с учетом количества
+def test_category_str():
     p1 = Product("Книга А", "Описание А", 50.0, 1)
     p2 = Product("Книга Б", "Описание Б", 75.5, 2)
     category = Category("Категория", "Описание", [p1, p2])
 
-    info_str = category.products
-
-    # Проверяем, что строка содержит информацию о каждом продукте в новом формате
-    assert f"{p1.name}, {p1.price} руб. Остаток: {p1.quantity} шт." in info_str
-    assert f"{p2.name}, {p2.price} руб. Остаток: {p2.quantity} шт." in info_str
-
-    # Проверяем, что строки разделены переносом и правильные
-    lines = info_str.split("\n")
-    assert len(lines) == 2
-    assert lines[0] == f"{p1.name}, {p1.price} руб. Остаток: {p1.quantity} шт."
-    assert lines[1] == f"{p2.name}, {p2.price} руб. Остаток: {p2.quantity} шт."
+    result = str(category)
+    assert result == "Категория: Категория. Количество продуктов: 3 шт."
