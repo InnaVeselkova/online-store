@@ -16,7 +16,10 @@ class Product(ReprMixin, BaseProduct):
         self.name = name
         self.description = description
         self.__price = float(price)
-        self.quantity = quantity
+        if quantity > 0:
+            self.quantity = quantity
+        else:
+            raise ValueError("Товар с нулевым количеством не может быть добавлен")
 
     @classmethod
     def new_product(cls, data: Dict) -> 'Product':
