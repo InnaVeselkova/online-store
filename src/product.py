@@ -5,7 +5,7 @@ from src.baseProduct import BaseProduct
 from src.reprMixin import ReprMixin
 
 
-class Product(BaseProduct, ReprMixin):
+class Product(ReprMixin, BaseProduct):
     name: str
     description: str
     price: float
