@@ -38,6 +38,21 @@ class Category:
         total_quantity = sum(product.quantity for product in self.__products)
         return f"Категория: {self.name}. Количество продуктов: {total_quantity} шт."
 
+    def middle_price(self):
+        """Метод для подсчёта среднего ценника товаров в категории."""
+        try:
+            total_price = sum(product.price for product in self.products_)
+            total_products = len(self.products_)
+
+            # Вычисляем среднюю цену
+            average = total_price / total_products
+            return average
+
+        except ZeroDivisionError:
+            # Происходит деление при нулевом количестве
+            print("Продуктов нет")
+            return 0.0
+
 
 if __name__ == "__main__":  # pragma: no cover
     product1 = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
