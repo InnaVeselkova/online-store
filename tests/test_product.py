@@ -70,3 +70,9 @@ def test_product_str():
 
     result = str(product1)
     assert result == "Товар 1, 100.0 руб. Остаток: 10 шт."
+
+
+def test_zero_quantity():
+    with pytest.raises(ValueError) as e:
+        Product('Книга', 'Учебник', 50.0, 0.0)
+        assert e == "Товар с нулевым количеством не может быть добавлен"
